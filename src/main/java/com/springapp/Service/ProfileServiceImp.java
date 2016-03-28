@@ -3,6 +3,7 @@ package com.springapp.Service;
 import com.google.inject.Inject;
 import com.springapp.Entity.Profile;
 import com.springapp.XDao.ProfileDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service
 public class ProfileServiceImp implements ProfileService {
 
-    @Inject
+    @Autowired
     private ProfileDao profiledaoimp;
 
     @Override
