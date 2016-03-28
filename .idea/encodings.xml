@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Dao/Dao.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Entity/Profile.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Repository/AbsProfileDaoImp.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Repository/ProfileDaoImp.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Service/ProfileService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Service/ProfileServiceImp.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/XDao/ProfileDao.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/mvc/HelloController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/hibernate.cfg.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/resources/application-context.xml" charset="UTF-8" />
+  </component>
+</project>
