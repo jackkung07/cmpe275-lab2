@@ -4,14 +4,12 @@ import com.springapp.Entity.Profile;
 import com.springapp.Service.ProfileService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.format.datetime.standard.DateTimeContext;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,16 +22,117 @@ public class HelloController {
 		ApplicationContext context =
 				new ClassPathXmlApplicationContext("application-context.xml");
 		return (ProfileService) context.getBean("ProfileService");
+	}
 
+	//welcome page
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public String printWelcome(ModelMap model) {
+		model.addAttribute("message", "CMPE 277 Lab 2");
+		return "hello";
+	}
+
+	//custom 404 pages
+	//getmessage returns profile id
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ModelAndView handleCustomException(ResourceNotFoundException ex) {
+		ModelAndView model = new ModelAndView("notfound");
+		model.addObject("id", ex.getMessage());
+		return model;
 
 	}
 
-	@RequestMapping(value="/", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
+	//Get a profile as HTML
+	//first requirement
+	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET)
+	public String getProfile(ModelMap model, @PathVariable("userId") String id) {
 
+		List<Profile> list = getProfileServices().getProfilebyid(id);
+		if(list.size()>0) {
+			Profile profile = list.get(0);
+			model.put("id", profile.getId());
+			model.put("firstname", profile.getFirstname());
+			model.put("lastname", profile.getLastname());
+			model.put("email", profile.getEmail());
+			model.put("address", profile.getAddress());
+			model.put("organization", profile.getOrganization());
+			model.put("aboutmyself", profile.getAboutMyself());
+		}else{
+			//return 404
+			throw new ResourceNotFoundException(id);
+		}
 
-		model.addAttribute("message", "Hello world!");
-		return "hello";
+		return "createprofile";
+	}
+
+	//get a profile as plain text
+	//second requirement
+	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET, params = "brief")
+	public String getProfile(ModelMap model, @PathVariable("userId") String id, @RequestParam("brief") boolean brief) {
+
+		List<Profile> list = getProfileServices().getProfilebyid(id);
+		if(list.size()>0) {
+			Profile profile = list.get(0);
+			model.put("id", profile.getId());
+			model.put("firstname", profile.getFirstname());
+			model.put("lastname", profile.getLastname());
+			model.put("email", profile.getEmail());
+			model.put("address", profile.getAddress());
+			model.put("organization", profile.getOrganization());
+			model.put("aboutmyself", profile.getAboutMyself());
+		}else{
+			//return 404
+			throw new ResourceNotFoundException(id);
+		}
+
+		if(brief){
+			return "brief";
+		}
+		return "createprofile";
+	}
+
+	//get the profile creation html
+	//third requirement
+	@RequestMapping(value="/profile", method = RequestMethod.GET)
+	public String getProfile(ModelMap model) {
+		return "createprofile";
+	}
+
+	//create or update profile
+	//4th requirement
+	@RequestMapping(value="/profile", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
+	public String postProfile(ModelMap model, @ModelAttribute("profile") Profile profile) {
+
+		//if it is in database
+		List<Profile> list = getProfileServices().getProfilebyid(profile.getId());
+		if(list.size() > 0){
+			profile.setSystem_id(list.get(0).getSystem_id());
+			getProfileServices().update(profile);
+		}else {
+			//not in database
+			getProfileServices().insert(profile);
+		}
+
+		model.put("id", profile.getId());
+		model.put("firstname", profile.getFirstname());
+		model.put("lastname", profile.getLastname());
+		model.put("email", profile.getEmail());
+		model.put("address", profile.getAddress());
+		model.put("organization", profile.getOrganization());
+		model.put("aboutmyself", profile.getAboutMyself());
+		return "brief";
+	}
+
+	//delete a profile
+	//5th requirement
+	@RequestMapping(value="/profile/{userId}", method = RequestMethod.DELETE)
+	public String deleteProfile(ModelMap model, @PathVariable("userId") String id){
+		List<Profile> list = getProfileServices().getProfilebyid(id);
+		if(list.size()>0) {
+			getProfileServices().delete(id);
+		}else{
+			throw new ResourceNotFoundException(id);
+		}
+		return "createprofile";
 	}
 
 	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}/{aboutmyself}/{address}/{email}/{organization}", method = RequestMethod.GET)
@@ -97,6 +196,5 @@ public class HelloController {
 		model.addAttribute("message", "done");
 		return "hello";
 	}
-
 
 }

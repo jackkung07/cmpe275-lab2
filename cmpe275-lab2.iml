@@ -11,7 +11,7 @@
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
-          <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/src/resources" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -20,7 +20,18 @@
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/resources/application-context.xml</file>
           <file>file://$MODULE_DIR$/src/resources/application-context.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/database/DataSource.xml</file>
         </fileset>
+      </configuration>
+    </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="hibernate.cfg.xml" />
+          <unit-entry name="mySessionFactory" value="dataSource" />
+        </datasource-map>
+        <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>
