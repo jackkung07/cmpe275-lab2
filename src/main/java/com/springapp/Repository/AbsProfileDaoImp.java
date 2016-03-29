@@ -3,6 +3,7 @@ package com.springapp.Repository;
 import com.springapp.Dao.Dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by ivanybma on 3/27/16.
  */
+@Transactional
 public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
     @Inject
     private SessionFactory mySessionFactory;
@@ -22,7 +24,8 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
     private Class<T> domainClass;
 
     protected Session getSession(){
-        return mySessionFactory.getCurrentSession();
+        Session sess =  mySessionFactory.getCurrentSession();
+        return sess;
     }
 
     private Class<T> getDomainClass(){

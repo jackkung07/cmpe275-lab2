@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class HelloController {
 
-	private ProfileService crtstudsrv(){
+	private ProfileService getProfileServices(){
 		ApplicationContext context =
 				new ClassPathXmlApplicationContext("application-context.xml");
 		return (ProfileService) context.getBean("ProfileService");
@@ -31,22 +31,29 @@ public class HelloController {
 		return "hello";
 	}
 
-	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}", method = RequestMethod.GET)
-	public String addtest(@PathVariable("id") String id,@PathVariable("lastname") String lastname,@PathVariable("firstname") String firstname) {
+	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}/{aboutmyself}/{address}/{email}/{organization}", method = RequestMethod.GET)
+	public String addtest(@PathVariable("id") String id,@PathVariable("lastname") String lastname,@PathVariable("firstname") String firstname,
+						  @PathVariable("aboutmyself") String aboutmyself,@PathVariable("address") String address,@PathVariable("email") String email,
+						  @PathVariable("organization") String organization) {
 		Profile newprofile = new Profile();
+		newprofile.setSystem_id(null);
 		newprofile.setId(id);
 		newprofile.setLastname(lastname);
 		newprofile.setFirstname(firstname);
-		newprofile.setSystem_id(null);
-		crtstudsrv().insert(newprofile);
+		newprofile.setEmail(email);
+		newprofile.setAboutMyself(aboutmyself);
+		newprofile.setAddress(address);
+		newprofile.setOrganization(organization);
+
+		getProfileServices().insert(newprofile);
 		return "hello";
 	}
 
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public String retrieve(ModelMap model) {
 
-		//List<Profile> stdlist = crtstudsrv().queryall();
-		String rpl = crtstudsrv().testquery();
+		//List<Profile> stdlist = getProfileServices().queryall();
+		String rpl = getProfileServices().testquery();
 		model.addAttribute("message", rpl);
 		return "hello";
 	}

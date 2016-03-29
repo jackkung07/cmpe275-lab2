@@ -1,6 +1,6 @@
 package com.springapp.Service;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import com.springapp.Entity.Profile;
 import com.springapp.XDao.ProfileDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ProfileServiceImp implements ProfileService {
 
-    @Autowired
+    @Inject
     private ProfileDao profiledaoimp;
 
     @Override
