@@ -11,15 +11,11 @@ public interface ProfileService {
 
     public void insert(Profile st);
 
-    public void delete(Integer id);
+    public void delete(String id);
 
-    public Profile getStudent(Integer id);
+    public List<Profile> getProfilebyid(String id);
 
-    public void update(List<Profile> stl);
-
-    public List<Profile> query(Profile st);
-
-    public List<Profile> queryall();
+    public void update(Profile obj);
 
     public String testquery();
 

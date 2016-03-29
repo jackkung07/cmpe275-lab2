@@ -41,7 +41,7 @@
             driverClassName="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost:3306/ivan_java"
             username="ivan"
-            password=""
+            password="440103"
     />
 
 </Context>

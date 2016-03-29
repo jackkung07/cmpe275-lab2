@@ -4,12 +4,17 @@ import com.springapp.Entity.Profile;
 import com.springapp.Service.ProfileService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.format.datetime.standard.DateTimeContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -52,9 +57,46 @@ public class HelloController {
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public String retrieve(ModelMap model) {
 
-		//List<Profile> stdlist = getProfileServices().queryall();
 		String rpl = getProfileServices().testquery();
 		model.addAttribute("message", rpl);
 		return "hello";
 	}
+
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
+
+		getProfileServices().delete(id);
+		model.addAttribute("message", "done");
+		return "hello";
+	}
+
+	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
+	public String querybyid(@PathVariable("id") String id ,ModelMap model) {
+
+		String linkrst ="";
+		List<Profile> rstset = getProfileServices().getProfilebyid(id);
+		for(int i=0; i<rstset.size(); i++)
+		linkrst += "Record #: " + String.valueOf(i)+": "+ rstset.get(i).toString();
+		model.addAttribute("message", linkrst);
+		return "hello";
+	}
+
+	@RequestMapping(value="/update", method = RequestMethod.GET)
+	public String update(ModelMap model) {
+
+		Profile test = new Profile();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		List<Profile> rstset = getProfileServices().getProfilebyid("0001");
+		for(int i=0; i<rstset.size(); i++)
+		{
+			test = rstset.get(i);
+			test.setOrganization(dateFormat.format(cal.getTime()));
+			getProfileServices().update(test);
+		}
+		model.addAttribute("message", "done");
+		return "hello";
+	}
+
+
 }

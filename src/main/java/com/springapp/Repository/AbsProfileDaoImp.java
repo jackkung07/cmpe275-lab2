@@ -1,13 +1,16 @@
 package com.springapp.Repository;
 
 import com.springapp.Dao.Dao;
+import com.springapp.Entity.Profile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -41,49 +44,6 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
         return getDomainClass().getName();
     }
 
-    public List<T> queryall(){
-        List profilelst = new ArrayList();
-//        List prts = mySessionFactory.getCurrentSession().getNamedQuery("findProfileByLastName").list();
-//        for (Iterator iterator1 =
-//             prts.iterator(); iterator1.hasNext();)
-//        {
-//            T prt = (T) iterator1.next();
-//            profilelst.add(prt);
-//        }
-//
-        return profilelst;
-    }
-
-    public List<T> query(T obj){
-        List prl = new ArrayList();
-//        List profilelst = mySessionFactory.getCurrentSession().getNamedQuery("findProfileByLastName").list();
-//        for (Iterator iterator1 =
-//             profilelst.iterator(); iterator1.hasNext();)
-//        {
-//            T prt = (T) iterator1.next();
-//            prl.add(prt);
-//        }
-        return prl;
-    }
-
-    public void update(T obj){
-        System.out.println(obj);
-        getSession().update(obj);
-    }
-
-    public void delete(T obj){
-        System.out.println(obj);
-        getSession().delete(obj);
-    }
-
-    public void deleteById(Serializable id){
-        delete(load(id));
-    }
-
-    public void deleteAll(){
-        getSession().createQuery("delete " + getDomainClassName()).executeUpdate();
-    }
-
     public void insert(T obj){
 
         Method method= ReflectionUtils.findMethod(getDomainClass(),"toString");
@@ -99,9 +59,38 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
         System.out.println("Saved!");
     }
 
+    public List<T> query(String id){
+        return  getSession().createCriteria(Profile.class)
+                .add( Restrictions.eq("id",id) ).list();
+    }
+
+    public void update(T obj){
+        System.out.println(obj);
+        getSession().update(obj);
+    }
+
+    public void deleteById(Serializable id){
+        Session tmpsess =getSession();
+        List<T> profilelst = tmpsess.createCriteria(Profile.class)
+                .add( Restrictions.eq("id",id) ).list();
+        for(T obj:profilelst){
+            tmpsess.delete(obj);
+        }
+    }
+
+    //below functions are not used by lab_2 project
+
+    public void delete(T obj){
+        System.out.println(obj);
+        getSession().delete(obj);
+    }
+
+    public void deleteAll(){
+        getSession().createQuery("delete " + getDomainClassName()).executeUpdate();
+    }
+
     public T get(Serializable id){
-        Session session=getSession();
-        return (T) session.get(getDomainClass(), id);
+        return null;
     }
 
     public T load(Serializable id){
@@ -116,6 +105,11 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
 
     public boolean exists(Serializable id){
         return(get(id)!=null);
+    }
+
+    public List<T> queryall(){
+        List profilelst = new ArrayList();
+        return profilelst;
     }
 
 }

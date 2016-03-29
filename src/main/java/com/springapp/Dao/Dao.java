@@ -14,7 +14,7 @@ public interface Dao<T extends Object> {
     public void deleteById(Serializable id);
     public void deleteAll();
     public void update(T st);
-    public List<T> query(T st);
+    public List<T> query(String id);
     public List<T> queryall();
     public T get(Serializable id);
     public T load(Serializable id);
