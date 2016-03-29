@@ -9,7 +9,7 @@
 <html>
 <head>
   <h1>profile</h1>
-  <form action="/profile" method="post|delete">
+  <form action="/profile" method="post">
     ID: <input type="text" name="id" value="${id}"/><br/>
     First name: <input type="text" name="firstname" value="${firstname}"/><br>
     Last name: <input type="text" name="lastname" value="${lastname}"/><br>
