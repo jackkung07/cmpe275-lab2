@@ -9,7 +9,7 @@
 <html>
 <head>
   <title>Group 7: Profile</title>
-  <h1>profile</h1>
+  <h1>Group 7: Profile</h1>
   <form action="/profile" method="post">
     <fieldset>
       <legend>User information:</legend>

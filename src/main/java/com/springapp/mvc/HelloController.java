@@ -86,7 +86,7 @@ public class HelloController {
 
 	//create or update profile
 	//4th requirement
-	@RequestMapping(value="/profile", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
+	@RequestMapping(value="/profile", method = RequestMethod.POST)
 	public String postProfile(ModelMap model, @ModelAttribute("profile") Profile profile) {
 
 		//if it is in database
