@@ -49,36 +49,23 @@ public class HelloController {
 		List<Profile> list = getProfileServices().getProfilebyid(id);
 		if(list.size()>0) {
 			Profile profile = list.get(0);
-			model.put("id", profile.getId());
-			model.put("firstname", profile.getFirstname());
-			model.put("lastname", profile.getLastname());
-			model.put("email", profile.getEmail());
-			model.put("address", profile.getAddress());
-			model.put("organization", profile.getOrganization());
-			model.put("aboutmyself", profile.getAboutMyself());
+			model.put("profile", profile);
 		}else{
 			//return 404
 			throw new ResourceNotFoundException(id);
 		}
 
-		return "createprofile";
+		return "editprofile";
 	}
 
 	//get a profile as plain text
 	//second requirement
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET, params = "brief")
 	public String getProfile(ModelMap model, @PathVariable("userId") String id, @RequestParam("brief") boolean brief) {
-
 		List<Profile> list = getProfileServices().getProfilebyid(id);
 		if(list.size()>0) {
 			Profile profile = list.get(0);
-			model.put("id", profile.getId());
-			model.put("firstname", profile.getFirstname());
-			model.put("lastname", profile.getLastname());
-			model.put("email", profile.getEmail());
-			model.put("address", profile.getAddress());
-			model.put("organization", profile.getOrganization());
-			model.put("aboutmyself", profile.getAboutMyself());
+			model.put("profile", profile);
 		}else{
 			//return 404
 			throw new ResourceNotFoundException(id);
@@ -87,7 +74,7 @@ public class HelloController {
 		if(brief){
 			return "brief";
 		}
-		return "createprofile";
+		return "editprofile";
 	}
 
 	//get the profile creation html
@@ -112,27 +99,23 @@ public class HelloController {
 			getProfileServices().insert(profile);
 		}
 
-		model.put("id", profile.getId());
-		model.put("firstname", profile.getFirstname());
-		model.put("lastname", profile.getLastname());
-		model.put("email", profile.getEmail());
-		model.put("address", profile.getAddress());
-		model.put("organization", profile.getOrganization());
-		model.put("aboutmyself", profile.getAboutMyself());
-		return "brief";
+		model.put("profile", profile);
+		return "editprofile";
 	}
 
 	//delete a profile
 	//5th requirement
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.DELETE)
 	public String deleteProfile(ModelMap model, @PathVariable("userId") String id){
+		System.out.println("-------------------");
 		List<Profile> list = getProfileServices().getProfilebyid(id);
 		if(list.size()>0) {
+//			getProfileServices().update(profile);
 			getProfileServices().delete(id);
 		}else{
 			throw new ResourceNotFoundException(id);
 		}
-		return "createprofile";
+		return "redirect:/profile";
 	}
 
 	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}/{aboutmyself}/{address}/{email}/{organization}", method = RequestMethod.GET)
@@ -161,13 +144,13 @@ public class HelloController {
 		return "hello";
 	}
 
-	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
-
-		getProfileServices().delete(id);
-		model.addAttribute("message", "done");
-		return "hello";
-	}
+//	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+//	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
+//		System.out.println("ok");
+//		getProfileServices().delete(id);
+//		model.addAttribute("message", "done");
+//		return "hello";
+//	}
 
 	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
 	public String querybyid(@PathVariable("id") String id ,ModelMap model) {

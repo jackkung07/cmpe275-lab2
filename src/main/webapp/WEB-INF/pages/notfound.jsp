@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>404 Not Found</title>
+  <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
 </head>
 <h1>Sorry, the requested user with ID ${id} does not exist.</h1>
 <body>

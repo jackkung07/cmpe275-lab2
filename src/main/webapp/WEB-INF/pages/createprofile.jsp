@@ -8,16 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+  <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
   <h1>profile</h1>
   <form action="/profile" method="post">
-    ID: <input type="text" name="id" value="${id}"/><br/>
-    First name: <input type="text" name="firstname" value="${firstname}"/><br>
-    Last name: <input type="text" name="lastname" value="${lastname}"/><br>
-    Email: <input type="text" name="email" value="${email}"/><br>
-    Address: <input type="text" name="address" value="${address}"/><br>
-    Organization: <input type="text" name="organization" value="${organization}"/><br>
-    About myself: <input type="text" name="aboutmyself" value="${aboutmyself}"/><br>
-    <input type="submit" value="Submit" />
+    <fieldset>
+      <legend>User information:</legend>
+      <table>
+        <tr><td>ID: </td><td><input type="text" name="id" value="${id}"/></td></tr>
+        <tr><td>First name: </td><td><input type="text" name="firstname" value="${firstname}"/></td></tr>
+        <tr><td>Last name: </td><td><input type="text" name="lastname" value="${lastname}"/></td></tr>
+        <tr><td>Email: </td><td><input type="text" name="email"value="${email}" /></td></tr>
+        <tr><td>Address: </td><td><input type="text" name="address" value="${address}"/></td></tr>
+        <tr><td>Organization: </td><td><input type="text" name="organization" value="${organization}"/></td></tr>
+        <tr><td>About myself: </td><td><input type="text" name="aboutMyself" value="${aboutMyself}"/></td></tr>
+      </table>
+    </fieldset>
+    <br>
+    <input type="submit" value="Create" />
   </form>
 </head>
 <body>

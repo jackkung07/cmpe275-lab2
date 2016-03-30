@@ -21,6 +21,7 @@ import java.util.List;
  */
 @Transactional
 public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
+    //TODO EntityManager not sessionfactory
     @Inject
     private SessionFactory mySessionFactory;
 

@@ -8,17 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
 </head>
 <body>
 <pre>
-  ID: ${id}
-  First name: ${firstname}
-  Last name: ${lastname}
-  Email: ${email}
-  Address: ${address}
-  Organization: ${organization}
-  About myself: ${aboutmyself}
+  ID: ${profile.id}
+  First name: ${profile.firstname}
+  Last name: ${profile.lastname}
+  Email: ${profile.email}
+  Address: ${profile.address}
+  Organization: ${profile.organization}
+  About myself: ${profile.aboutMyself}
 </pre>
 </body>
 </html>
