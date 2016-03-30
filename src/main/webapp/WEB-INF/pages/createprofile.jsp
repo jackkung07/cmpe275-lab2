@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
+  <title>Group 7: Profile</title>
   <h1>profile</h1>
   <form action="/profile" method="post">
     <fieldset>

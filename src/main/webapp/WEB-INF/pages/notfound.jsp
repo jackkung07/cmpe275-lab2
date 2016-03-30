@@ -8,8 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
+  <title>Group 7: Profile</title>
 </head>
+
 <h1>Sorry, the requested user with ID ${id} does not exist.</h1>
 <body>
 

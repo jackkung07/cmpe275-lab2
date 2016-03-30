@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Group of 3: Yuebiao Ma, Che-Yi Kung, Minglu Liu</title>
+  <title>Group 7: Profile</title>
   <style type="text/css">
     input.left{width:150px;height:3em;margin-left:40px;}
     input.right{width:150px;height:3em;margin-left:60px;}
