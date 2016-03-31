@@ -16,12 +16,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * This is the controller class
+ * The controller class is responsible to display model to view
+ * and handle event from view and changes model accordingly
+ *
+ * @author  Che-Yi Kung, MingLu Liu, Yuebiao Ma
+ * @version 1.0
+ * @since 2016-03-30
+ *
+ */
+
 @Controller
 public class HelloController {
 
 	@Autowired
 	private ProfileService profileService;
 
+	/**
+	 * This shows welcome page
+	 * @param model for modeling jsp parameters
+	 * @return String for send model to a specific view, hello.jsp in this case
+	 */
 	//welcome page
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -29,8 +45,12 @@ public class HelloController {
 		return "hello";
 	}
 
-	//custom 404 pages
-	//getmessage returns profile id
+	/**
+	 * This is for output a custom 404 not found http error page.
+	 *
+	 * @param ex takes ResourceNotFoundException obj
+	 * @return model returns notfound view, notfound.jsp in this case
+	 */
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ModelAndView handleCustomException(ResourceNotFoundException ex) {
 		ModelAndView model = new ModelAndView("notfound");
@@ -39,8 +59,14 @@ public class HelloController {
 
 	}
 
-	//Get a profile as HTML
-	//first requirement
+	/**
+	 * This returns an HTML that renders the given user’s profile. The profile fields are part of an HTML form.
+	 * If profile were not in the database record, a exception is thrown.
+	 *
+	 * @param model takes model from modelandview
+	 * @param id takes profile id
+	 * @return all model parameter to editprofile.jsp
+	 */
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET)
 	public String getProfile(ModelMap model, @PathVariable("userId") String id) {
 
@@ -56,8 +82,15 @@ public class HelloController {
 		return "editprofile";
 	}
 
-	//get a profile as plain text
-	//second requirement
+	/**
+	 * This returns an HTML that encapsulates the given user’s full profile in plain text format with the HTML.
+	 *
+	 *
+	 * @param model takes model from modelandview
+	 * @param id takes profile id
+	 * @param brief if true then plain text format is generated
+	 * @return all model parameter to brief.jsp or editprofile.jsp
+	 */
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET, params = "brief")
 	public String getProfile(ModelMap model, @PathVariable("userId") String id, @RequestParam("brief") boolean brief) {
 		List<Profile> list = profileService.getProfilebyid(id);
@@ -75,15 +108,22 @@ public class HelloController {
 		return "editprofile";
 	}
 
-	//get the profile creation html
-	//third requirement
+	/**
+	 * This get the profile creation HTML
+	 * @param model takes model from modelandview
+	 * @return createprofile.jsp view
+	 */
 	@RequestMapping(value="/profile", method = RequestMethod.GET)
 	public String getProfile(ModelMap model) {
 		return "createprofile";
 	}
 
-	//create or update profile
-	//4th requirement
+	/**
+	 * This is for profile creation or update
+	 * @param model takes model from modelandview
+	 * @param profile Profile dao
+	 * @return editprofile.jsp
+	 */
 	@RequestMapping(value="/profile", method = RequestMethod.POST)
 	public String postProfile(ModelMap model, @ModelAttribute("profile") Profile profile) {
 
@@ -101,8 +141,12 @@ public class HelloController {
 		return "editprofile";
 	}
 
-	//delete a profile
-	//5th requirement
+	/**
+	 * This is for profile deletion
+	 * @param model takes model from modelandview
+	 * @param id takes id of which profile to delete
+	 * @return routes back to createProfile.jsp
+	 */
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.DELETE)
 	public String deleteProfile(ModelMap model, @PathVariable("userId") String id){
 		System.out.println("-------------------");
@@ -115,7 +159,12 @@ public class HelloController {
 		return "redirect:/profile";
 	}
 
-// this is to delete the object by input id
+	/**
+	 * this is to delete the object by input id
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
 	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
 		System.out.println("ok");
@@ -123,7 +172,13 @@ public class HelloController {
 		model.addAttribute("message", "done");
 		return "hello";
 	}
-// this is for querying usage(test the query by id module)
+
+	/**
+	 * this is for querying usage(test the query by id module)
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
 	public String querybyid(@PathVariable("id") String id ,ModelMap model) {
 		String linkrst ="";
@@ -134,7 +189,12 @@ public class HelloController {
 		model.addAttribute("message", linkrst);
 		return "hello";
 	}
-//this is for testing usage(test the update module)
+
+	/**
+	 * this is for testing usage(test the update module)
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/update", method = RequestMethod.GET)
 	public String update(ModelMap model) {
 
@@ -151,7 +211,18 @@ public class HelloController {
 		model.addAttribute("message", "done");
 		return "hello";
 	}
-// this is to test the insert module
+
+	/**
+	 * this is to test the insert module
+	 * @param id
+	 * @param lastname
+	 * @param firstname
+	 * @param aboutmyself
+	 * @param address
+	 * @param email
+	 * @param organization
+	 * @return
+	 */
 	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}/{aboutmyself}/{address}/{email}/{organization}", method = RequestMethod.GET)
 	public String addtest(@PathVariable("id") String id,@PathVariable("lastname") String lastname,@PathVariable("firstname") String firstname,
 						  @PathVariable("aboutmyself") String aboutmyself,@PathVariable("address") String address,@PathVariable("email") String email,
@@ -170,7 +241,11 @@ public class HelloController {
 		return "hello";
 	}
 
-	//this is to test the query module
+	/**
+	 * this is to test the query module
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public String retrieve(ModelMap model) {
 
