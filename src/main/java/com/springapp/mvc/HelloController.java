@@ -115,6 +115,43 @@ public class HelloController {
 		return "redirect:/profile";
 	}
 
+// this is to delete the object by input id
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
+		System.out.println("ok");
+		profileService.delete(id);
+		model.addAttribute("message", "done");
+		return "hello";
+	}
+// this is for querying usage(test the query by id module)
+	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
+	public String querybyid(@PathVariable("id") String id ,ModelMap model) {
+		String linkrst ="";
+		List<Profile> rstset = profileService.getProfilebyid(id);
+				//getProfileServices().getProfilebyid(id);
+		for(int i=0; i<rstset.size(); i++)
+		linkrst += "Record #: " + String.valueOf(i)+": "+ rstset.get(i).toString();
+		model.addAttribute("message", linkrst);
+		return "hello";
+	}
+//this is for testing usage(test the update module)
+	@RequestMapping(value="/update", method = RequestMethod.GET)
+	public String update(ModelMap model) {
+
+		Profile test = new Profile();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		List<Profile> rstset = profileService.getProfilebyid("0002");
+		for(int i=0; i<rstset.size(); i++)
+		{
+			test = rstset.get(i);
+			test.setOrganization(dateFormat.format(cal.getTime()));
+			profileService.update(test);
+		}
+		model.addAttribute("message", "done");
+		return "hello";
+	}
+// this is to test the insert module
 	@RequestMapping(value="/insert/{id}/{lastname}/{firstname}/{aboutmyself}/{address}/{email}/{organization}", method = RequestMethod.GET)
 	public String addtest(@PathVariable("id") String id,@PathVariable("lastname") String lastname,@PathVariable("firstname") String firstname,
 						  @PathVariable("aboutmyself") String aboutmyself,@PathVariable("address") String address,@PathVariable("email") String email,
@@ -133,48 +170,13 @@ public class HelloController {
 		return "hello";
 	}
 
+	//this is to test the query module
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public String retrieve(ModelMap model) {
 
 		String rpl = profileService.testquery();
-				//getProfileServices().testquery();
+		//getProfileServices().testquery();
 		model.addAttribute("message", rpl);
-		return "hello";
-	}
-
-	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
-		System.out.println("ok");
-		profileService.delete(id);
-		model.addAttribute("message", "done");
-		return "hello";
-	}
-
-	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
-	public String querybyid(@PathVariable("id") String id ,ModelMap model) {
-		String linkrst ="";
-		List<Profile> rstset = profileService.getProfilebyid(id);
-				//getProfileServices().getProfilebyid(id);
-		for(int i=0; i<rstset.size(); i++)
-		linkrst += "Record #: " + String.valueOf(i)+": "+ rstset.get(i).toString();
-		model.addAttribute("message", linkrst);
-		return "hello";
-	}
-
-	@RequestMapping(value="/update", method = RequestMethod.GET)
-	public String update(ModelMap model) {
-
-		Profile test = new Profile();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Calendar cal = Calendar.getInstance();
-		List<Profile> rstset = profileService.getProfilebyid("0002");
-		for(int i=0; i<rstset.size(); i++)
-		{
-			test = rstset.get(i);
-			test.setOrganization(dateFormat.format(cal.getTime()));
-			profileService.update(test);
-		}
-		model.addAttribute("message", "done");
 		return "hello";
 	}
 
