@@ -29,6 +29,15 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
 
     private Class<T> domainClass;
 
+
+    /**
+     * Reflect the concrete class object
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @since 2016-03-30
+     *
+     */
     private Class<T> getDomainClass(){
         if (domainClass==null)
         {
@@ -38,10 +47,27 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
         return domainClass;
     }
 
+    /**
+     * Reflect the concrete class name
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @since 2016-03-30
+     *
+     */
     private String getDomainClassName(){
         return getDomainClass().getName();
     }
 
+    /**
+     * Persist object
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @param obj object pending to be persisted
+     * @since 2016-03-30
+     *
+     */
     public void insert(T obj){
 
         Method method= ReflectionUtils.findMethod(getDomainClass(),"toString");
@@ -56,16 +82,42 @@ public abstract class AbsProfileDaoImp <T extends Object> implements Dao<T> {
         System.out.println("Saved!");
     }
 
+    /**
+     * Retrieve object list according to object id
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @param id for query
+     * @since 2016-03-30
+     *
+     */
     public List<T> query(String id){
         return entityManager.createQuery("from Profile as p where id=:id").setParameter("id",id).getResultList();
     }
 
+    /**
+     * Update object
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @param obj object pending to be updated
+     * @since 2016-03-30
+     *
+     */
     public void update(T obj){
         System.out.println(obj);
         entityManager.merge(obj);
-       // entityManager.flush();
     }
 
+    /**
+     * delete object by id
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @param id object pending to be deleted
+     * @since 2016-03-30
+     *
+     */
     public void deleteById(Serializable id){
         List<T> profilelst = entityManager.createQuery("from Profile as p where id=:id").setParameter("id",id).getResultList();
         for(T obj:profilelst){

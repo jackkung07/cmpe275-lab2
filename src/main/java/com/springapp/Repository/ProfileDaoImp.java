@@ -15,6 +15,14 @@ import java.util.ArrayList;
 @Repository
 public class ProfileDaoImp extends AbsProfileDaoImp<Profile> implements ProfileDao {
 
+    /**
+     * testing query for all the data in table
+     *
+     * @author  Yuebiao ma
+     * @version 1.0
+     * @since 2016-03-30
+     *
+     */
     public String testquery(){
         System.out.println("profile query test before");
         TypedQuery<Profile> qry = entityManager.createNamedQuery("findAll", Profile.class);
