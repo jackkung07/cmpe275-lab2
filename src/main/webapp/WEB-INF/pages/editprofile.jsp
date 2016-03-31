@@ -59,7 +59,7 @@
   <input class="right" type="button" value="Delete" onclick="Delete()"/>
 </form>
 
-<form id="deleteProfileForm" action="/cmpe275-lab2/profile/${profile.id}" method= "post">
+<form id="deleteProfileForm" action="/profile/${profile.id}" method= "post">
   <input type="hidden" name ="_method" value ="delete">
 </form>
 

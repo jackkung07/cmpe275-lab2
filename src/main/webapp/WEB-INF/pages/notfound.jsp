@@ -11,6 +11,7 @@
   <title>Group 7: Profile</title>
 </head>
 
+<h1>404 Profile Not Found.</h1>
 <h1>Sorry, the requested user with ID ${id} does not exist.</h1>
 <body>
 
