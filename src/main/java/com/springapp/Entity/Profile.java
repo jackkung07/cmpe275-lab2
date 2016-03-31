@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="Profile")
-@NamedQuery(name="findAll", query="from Profile")
+@NamedQuery(name="findAll", query="SELECT c FROM Profile c")
 public class Profile implements Serializable {
 
     private Long system_id;

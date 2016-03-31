@@ -39,9 +39,9 @@
             maxId="30"
             maxWait="10000"
             driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/275_lab2_db"
-            username="root"
-            password=""
+            url="jdbc:mysql://localhost:3306/ivan_java"
+            username="ivan"
+            password="440103"
     />
 
 </Context>

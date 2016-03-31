@@ -6,20 +6,20 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 
 /**
  * Created by ivanybma on 3/27/16.
  */
-@Transactional
 @Repository
 public class ProfileDaoImp extends AbsProfileDaoImp<Profile> implements ProfileDao {
 
     public String testquery(){
         System.out.println("profile query test before");
-        Query qry = getSession().getNamedQuery("findAll");
+        TypedQuery<Profile> qry = entityManager.createNamedQuery("findAll", Profile.class);
         String rst ="";
-        ArrayList<Profile> rstlst = (ArrayList)qry.list();
+        ArrayList<Profile> rstlst = (ArrayList)qry.getResultList();
         for(int i=0; i<rstlst.size();i++)
             rst+=rstlst.get(i).toString();
         System.out.println("profile query test after");

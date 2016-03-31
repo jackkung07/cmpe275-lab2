@@ -2,6 +2,7 @@ package com.springapp.mvc;
 
 import com.springapp.Entity.Profile;
 import com.springapp.Service.ProfileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
@@ -18,11 +19,8 @@ import java.util.List;
 @Controller
 public class HelloController {
 
-	private ProfileService getProfileServices(){
-		ApplicationContext context =
-				new ClassPathXmlApplicationContext("application-context.xml");
-		return (ProfileService) context.getBean("ProfileService");
-	}
+	@Autowired
+	private ProfileService profileService;
 
 	//welcome page
 	@RequestMapping(value="/", method = RequestMethod.GET)
@@ -46,7 +44,7 @@ public class HelloController {
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET)
 	public String getProfile(ModelMap model, @PathVariable("userId") String id) {
 
-		List<Profile> list = getProfileServices().getProfilebyid(id);
+		List<Profile> list = profileService.getProfilebyid(id);
 		if(list.size()>0) {
 			Profile profile = list.get(0);
 			model.put("profile", profile);
@@ -62,7 +60,7 @@ public class HelloController {
 	//second requirement
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.GET, params = "brief")
 	public String getProfile(ModelMap model, @PathVariable("userId") String id, @RequestParam("brief") boolean brief) {
-		List<Profile> list = getProfileServices().getProfilebyid(id);
+		List<Profile> list = profileService.getProfilebyid(id);
 		if(list.size()>0) {
 			Profile profile = list.get(0);
 			model.put("profile", profile);
@@ -90,13 +88,13 @@ public class HelloController {
 	public String postProfile(ModelMap model, @ModelAttribute("profile") Profile profile) {
 
 		//if it is in database
-		List<Profile> list = getProfileServices().getProfilebyid(profile.getId());
+		List<Profile> list = profileService.getProfilebyid((profile.getId()));
 		if(list.size() > 0){
 			profile.setSystem_id(list.get(0).getSystem_id());
-			getProfileServices().update(profile);
+			profileService.update(profile);
 		}else {
 			//not in database
-			getProfileServices().insert(profile);
+			profileService.insert(profile);
 		}
 
 		model.put("profile", profile);
@@ -108,10 +106,9 @@ public class HelloController {
 	@RequestMapping(value="/profile/{userId}", method = RequestMethod.DELETE)
 	public String deleteProfile(ModelMap model, @PathVariable("userId") String id){
 		System.out.println("-------------------");
-		List<Profile> list = getProfileServices().getProfilebyid(id);
+		List<Profile> list = profileService.getProfilebyid(id);
 		if(list.size()>0) {
-//			getProfileServices().update(profile);
-			getProfileServices().delete(id);
+			profileService.delete(id);
 		}else{
 			throw new ResourceNotFoundException(id);
 		}
@@ -132,31 +129,32 @@ public class HelloController {
 		newprofile.setAddress(address);
 		newprofile.setOrganization(organization);
 
-		getProfileServices().insert(newprofile);
+		profileService.insert((newprofile));
 		return "hello";
 	}
 
 	@RequestMapping(value="/test", method = RequestMethod.GET)
 	public String retrieve(ModelMap model) {
 
-		String rpl = getProfileServices().testquery();
+		String rpl = profileService.testquery();
+				//getProfileServices().testquery();
 		model.addAttribute("message", rpl);
 		return "hello";
 	}
 
-//	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-//	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
-//		System.out.println("ok");
-//		getProfileServices().delete(id);
-//		model.addAttribute("message", "done");
-//		return "hello";
-//	}
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public String deletebyid(@PathVariable("id") String id ,ModelMap model) {
+		System.out.println("ok");
+		profileService.delete(id);
+		model.addAttribute("message", "done");
+		return "hello";
+	}
 
 	@RequestMapping(value="/querybyid/{id}", method = RequestMethod.GET)
 	public String querybyid(@PathVariable("id") String id ,ModelMap model) {
-
 		String linkrst ="";
-		List<Profile> rstset = getProfileServices().getProfilebyid(id);
+		List<Profile> rstset = profileService.getProfilebyid(id);
+				//getProfileServices().getProfilebyid(id);
 		for(int i=0; i<rstset.size(); i++)
 		linkrst += "Record #: " + String.valueOf(i)+": "+ rstset.get(i).toString();
 		model.addAttribute("message", linkrst);
@@ -169,12 +167,12 @@ public class HelloController {
 		Profile test = new Profile();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
-		List<Profile> rstset = getProfileServices().getProfilebyid("0001");
+		List<Profile> rstset = profileService.getProfilebyid("0002");
 		for(int i=0; i<rstset.size(); i++)
 		{
 			test = rstset.get(i);
 			test.setOrganization(dateFormat.format(cal.getTime()));
-			getProfileServices().update(test);
+			profileService.update(test);
 		}
 		model.addAttribute("message", "done");
 		return "hello";

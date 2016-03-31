@@ -10,15 +10,8 @@ import java.util.List;
 public interface Dao<T extends Object> {
 
     public void insert(T obj);
-    public void delete(T obj);
     public void deleteById(Serializable id);
-    public void deleteAll();
     public void update(T st);
     public List<T> query(String id);
-    public List<T> queryall();
-    public T get(Serializable id);
-    public T load(Serializable id);
-    public long count();
-    public boolean exists(Serializable id);
 
 }
