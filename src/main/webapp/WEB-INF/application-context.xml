@@ -15,7 +15,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="Url" value="jdbc:mysql://localhost:3306/275_lab2_db" />
-        <property name="username" value="" />
+        <property name="username" value="root" />
         <property name="password" value="" />
     </bean>
 

@@ -9,6 +9,5 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/Service/ProfileServiceImp.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/XDao/ProfileDao.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/springapp/mvc/HelloController.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/resources/application-context.xml" charset="UTF-8" />
   </component>
 </project>
